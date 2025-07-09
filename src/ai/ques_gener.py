@@ -1,7 +1,10 @@
-from src.api.ai import prompts
+from . import prompts
 import openai
+import os
+from dotenv import load_dotenv
 
-
+load_dotenv('//.env')
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 def generate_questions_ai(title: str, tags: str):
     
     prompt = prompts.get_prompt_for_questions(title, tags, n_questions=5)

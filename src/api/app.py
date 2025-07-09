@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-from .routers.router import router
+from .routers import router
 
 
 
 def create_app():
-    app = FastAPI(title="THE BEST WEB APP MADE BY REMINTA.OFF")
+    app = FastAPI(title="PARAM PAM")
     
     app.include_router(router)
     
