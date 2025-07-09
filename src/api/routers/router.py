@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, Response
 from authx import AuthX, AuthXConfig
 from pydantic import BaseModel
+from src.api import shemas
+from src.api.ai.ques_gener import generate_questions_ai
 
-
-openai_api_key = 'sk-SwDj282n2Anwwu96iaisTDxPUf1n15hG'
 
 
 
@@ -15,9 +15,7 @@ config.JWT_TOKEN_LOCATION = ["cookies"]
 
 security = AuthX(config=config)
 
-class UserLoginSchema(BaseModel):
-    username: str
-    password: str
+
 
 @router.get("/hello")
 async def hello():
@@ -25,7 +23,7 @@ async def hello():
 
 
 @router.post("/login")
-async def login(creds: UserLoginSchema, response: Response):
+async def login(creds: shemas.UserLoginSchema, response: Response):
     if creds.username == "admin" and creds.password == "password":
         authx = AuthX(config)
         access_token = authx.create_access_token(uid='12345') # , identity=creds.username
@@ -45,14 +43,9 @@ async def vacancy():
     return 'ВАКАНСИЙ НЕТ'
 
 
-class VacancyData(BaseModel):
-    title: str
-    tags: str
-    
-
 
 @router.post('/vacancies')
-async def vacancy(vac_data: VacancyData):
+async def vacancy(vac_data: shemas.VacancyData):
     '''тут будет создание вакансии'''
     return {
         'title': vac_data.title,
@@ -70,36 +63,9 @@ async def vacancy_detail(vacancy_id: int):
     }
 
 
-def generate_questions_ai(title: str, tags: str):
-    import openai
-    prompt = (f"Ты — опытный hr-специалист. Сейчас ты составляешь вопросы для собеседования на вакансию '{title}'. "
-        f"Кандидат должен обладать навыками: {tags}. Сгенерируй ровно 15 вопросов. "
-        "Вопросы должны быть релевантны вакансии и направлены на оценку как профессиональных навыков, так и soft skills. Выведи просто список из вопросов без пояснений или дополнительных комментариев."
-        )
-    
-    client = openai.OpenAI(
-    api_key=openai_api_key,
-    base_url="https://api.proxyapi.ru/openai/v1"
-    )
-    messages=[
-                {"role": "user", "content": prompt}
-    ]
-    response = client.chat.completions.create(
-        model="gpt-4o",
-        messages=messages,
-        max_tokens=1000,
-        temperature=0.7
-    )
-    
-    ans = response.choices[0].message.content
-    return {
-        'title': title,
-        'tags': tags,
-        'questions': ans
-    }
 
 
 @router.post('/vacancies/questions')
-async def add_questions(vac_data: VacancyData):
+async def add_questions(vac_data: shemas.VacancyData):
     return generate_questions_ai(vac_data.title, vac_data.tags)
 
