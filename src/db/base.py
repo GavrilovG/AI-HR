@@ -2,16 +2,16 @@ from ..settings import DatabaseSettings
 from collections.abc import Generator
 from contextlib import contextmanager
 
-from sqlalchemy import create_engine, orm
+from sqlalchemy import create_engine, orm, MetaData
 from sqlalchemy.orm import Session, declarative_base
 
-Base = declarative_base()
 
+Base = declarative_base()
 
 class Database:
     def __init__(self, settings: DatabaseSettings) -> None:
         self._engine = create_engine(
-            settings.url,
+            settings.url_driver,
             echo=settings.echo,
         )
         self.session_factory = orm.scoped_session(

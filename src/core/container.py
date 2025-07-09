@@ -18,6 +18,8 @@ def create_container() -> Container:
 
     container.register(Singleton(Database))
     container.register(Scoped(get_session, Session))
+    
+    
     container.register(Scoped(UserService))
     
     return container
