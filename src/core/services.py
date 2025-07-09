@@ -1,12 +1,13 @@
 from ..db.models import User
 from sqlalchemy import select
 from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class UserService:
     def __init__(
         self,
-        session: Session,
+        session: AsyncSession,
     ) -> None:
         self._session = session
 

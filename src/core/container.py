@@ -5,6 +5,7 @@ from ..settings import (
     DatabaseSettings,
     get_settings,
 )
+from sqlalchemy.ext.asyncio import AsyncSession
 from .services import UserService
 
 
@@ -17,7 +18,7 @@ def create_container() -> Container:
         container.register(Object(get_settings(settings_type), settings_type))
 
     container.register(Singleton(Database))
-    container.register(Scoped(get_session, Session))
+    container.register(Scoped(get_session, AsyncSession))
     
     
     container.register(Scoped(UserService))
