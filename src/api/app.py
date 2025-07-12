@@ -1,16 +1,17 @@
 from fastapi import FastAPI
 from .routers import router
-from ..core.di.container import get_container
-from aioinject.ext.fastapi import AioInjectMiddleware
+from ..db.base import async_connection_db, create_async_engine_db
 
 
-def create_app():
+async def create_app(scope=None):
     app = FastAPI(title="PARAM PAM")
     
-    app.include_router(router)
-    container = get_container()
-    app.add_middleware(AioInjectMiddleware, container=container)
+    db_session = await async_connection_db(
+        engine=await create_async_engine_db()
+        )
+
     
+    app.include_router(router)
     @app.get("/")
     async def root():
         return {"message": "OK"}
