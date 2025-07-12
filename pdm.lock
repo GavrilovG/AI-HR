@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:81823e9d6181969b2ff8a2f2e777269b4a381c3c25019915d7e0af73117f6921"
+content_hash = "sha256:694175a5a01ba063c35ee9dc604070c15f0df94ee98787de4721b98bba632a0a"
 
 [[metadata.targets]]
 requires_python = ">=3.11"
@@ -484,6 +484,16 @@ files = [
     {file = "jiter-0.10.0-cp314-cp314t-macosx_11_0_arm64.whl", hash = "sha256:5ed975b83a2b8639356151cef5c0d597c68376fc4922b45d0eb384ac058cfa00"},
     {file = "jiter-0.10.0-cp314-cp314t-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:3aa96f2abba33dc77f79b4cf791840230375f9534e5fac927ccceb58c5e604a5"},
     {file = "jiter-0.10.0.tar.gz", hash = "sha256:07a7142c38aacc85194391108dc91b5b57093c978a9932bd86a36862759d9500"},
+]
+
+[[package]]
+name = "lib"
+version = "4.0.0"
+summary = "Autocode standard library Python bindings"
+groups = ["default"]
+files = [
+    {file = "lib-4.0.0-py3-none-any.whl", hash = "sha256:d0a9e03b27d2b94c403f43c1af39366500032d587dcd45ffdf707131cbdf58c6"},
+    {file = "lib-4.0.0.tar.gz", hash = "sha256:da861f02e9ee8748a8f168584de94f0ed85aad65e70f62760f1962ae515c94e1"},
 ]
 
 [[package]]

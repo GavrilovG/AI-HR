@@ -1,16 +1,27 @@
-from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+import logging
+
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.ext.asyncio import (
+    AsyncSession,
+    AsyncEngine,
+    create_async_engine,
+    async_sessionmaker,
+)
 
 from ..settings import DatabaseSettings, get_settings
 
-_settings = get_settings(DatabaseSettings)
+Base = declarative_base()
 
-async_engine = create_async_engine(
-    _settings.url,
-    future=True,
-    pool_size=20,
-    pool_pre_ping=True,
-    pool_use_lifo=True,
-    echo=_settings.echo,
-)
 
-async_session_factory = async_sessionmaker(bind=async_engine)
+async def create_async_engine_db(
+    echo: True,
+) -> AsyncEngine:
+    return create_async_engine(get_settings(DatabaseSettings).url, echo=echo)
+
+
+async def async_connection_db(
+    engine: AsyncEngine,
+    expire_on_commit: bool = True,
+) -> AsyncSession:
+    return async_sessionmaker(engine, expire_on_commit=expire_on_commit)
