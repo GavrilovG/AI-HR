@@ -15,7 +15,12 @@ from sqlalchemy.ext.asyncio import (
 
 router = APIRouter(prefix='/test_di')
 
-@router.get('/')
-async def blabla():
+@router.get('/get_user')
+async def blabla(id: int):
     service = UserService()
-    return await service.get_by_id()
+    return await service.get_by_id(id)
+
+@router.post('/create_user')
+async def blabla(username: str, password: str):
+    service = UserService()
+    return await service.create_user(username, password)

@@ -12,12 +12,14 @@ class UserService:
     ) -> None:
         self._session = session
 
-    async def get_by_id(self):
+    async def get_by_id(self, id):
         print(self._session)
         # return {'a': 'ok'}
         async with self._session() as session:
-            user = await session.scalar(statement=select(User).where(User.id == 2))
-            return [user.id, user.username, user.password]
+            user = await session.scalar(statement=select(User).where(User.id == id))
+            if user is not None:
+                return [user.id, user.username, user.password]
+            return "Такого нету"
     
     async def create_user(
         self,
