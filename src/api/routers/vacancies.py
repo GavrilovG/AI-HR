@@ -41,11 +41,39 @@ async def generate_questions(
     return await service.generate_questions(vacancy_id=vacancy_id)
 
 
+@router.post("/{vacancy_id}/add-generated-questions")
+async def add_generated_questions(
+    vacancy_id: str,
+    add_request: schemas.AddGeneratedQuestionsRequest,
+    current_user: dict = Depends(security.access_token_required)
+):
+    service = VacancyService()
+    return await service.add_generated_questions(vacancy_id=vacancy_id, questions=add_request.questions)
 
-    
-    return await service.add_questions(
-        vacancy_id=vacancy_id, questions=questions)
+
+@router.delete("/{vacancy_id}/questions/{question_id}")
+async def delete_question(
+    vacancy_id: str,
+    question_id: str,
+    current_user: dict = Depends(security.access_token_required)
+):
+    service = VacancyService()
+    return await service.delete_question(vacancy_id=vacancy_id, question_id=question_id)
 
 
+@router.post("/{vacancy_id}/publish")
+async def publish_vacancy(
+    vacancy_id: str,
+    current_user: dict = Depends(security.access_token_required)
+):
+    service = VacancyService()
+    return await service.publish_vacancy(vacancy_id=vacancy_id)
 
 
+@router.get("/{vacancy_id}")
+async def get_vacancy(
+    vacancy_id: str,
+    current_user: dict = Depends(security.access_token_required)
+):
+    service = VacancyService()
+    return service.get_vacancy(vacancy_id=vacancy_id)
