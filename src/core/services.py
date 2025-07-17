@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
 from ..db.base import async_session, get_session
-from ..db.models import Vacancy
+from ..db.models import vacancy
 from src.ai.ques_gener import generate_questions_ai
 import uuid
 
