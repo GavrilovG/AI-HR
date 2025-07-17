@@ -1,7 +1,7 @@
-def get_prompt_for_questions(title, tags, n_questions):
+def get_prompt_for_questions(title, tags, n_questions, complexity):
     return (f"""
                 Ты - опытный HR-специалист с техническим бэкграундом. Твоя задача - составить список из {n_questions} профессиональных вопросов для собеседования на позицию {title}.
-
+                сложность вопросов: {complexity}
                 Ключевые требования к вакансии:
                 {tags}
 

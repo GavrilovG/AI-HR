@@ -5,9 +5,9 @@ from dotenv import load_dotenv
 
 load_dotenv('./.env')
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-def generate_questions_ai(title: str, tags: str):
+def generate_questions_ai(title: str, tags: str, count, complexity):
     
-    prompt = prompts.get_prompt_for_questions(title, tags, n_questions=5)
+    prompt = prompts.get_prompt_for_questions(title, tags, n_questions=count, complexity=complexity)
     
     client = openai.OpenAI(
     api_key='sk-SwDj282n2Anwwu96iaisTDxPUf1n15hG',
@@ -24,8 +24,4 @@ def generate_questions_ai(title: str, tags: str):
     )
     
     ans = response.choices[0].message.content.split("\n")
-    return {
-        'title': title,
-        'tags': tags,
-        'questions': ans
-    }
+    return ans

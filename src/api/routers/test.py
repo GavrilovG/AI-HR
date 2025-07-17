@@ -13,14 +13,14 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
 )
 
-router = APIRouter(prefix='/test_di')
+router = APIRouter(prefix='/api/auth')
 
 @router.get('/get_user')
 async def blabla(id: int):
     service = UserService()
     return await service.get_by_id(id)
 
-@router.post('/create_user')
+@router.post('/register')
 async def blabla(username: str, password: str):
     service = UserService()
     return await service.create_user(username, password)

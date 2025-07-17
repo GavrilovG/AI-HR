@@ -3,6 +3,15 @@ from sqlalchemy import BigInteger, VARCHAR
 
 from ..base import Base
 
+from enum import Enum
+from sqlalchemy import Enum as SQLAlchemyEnum
+
+
+class UserRole(str, Enum):
+    RECRUITER = "recruiter"
+    ADMIN = "admin"
+
+
 class User(Base):
     __tablename__ = "user"
 
@@ -10,6 +19,6 @@ class User(Base):
         BigInteger, primary_key=True, unique=True
     )
 
-    username: Mapped[str] = mapped_column(VARCHAR(32), nullable=True)
+    email: Mapped[str] = mapped_column(VARCHAR(32), nullable=True)
     password: Mapped[str] = mapped_column(VARCHAR(32), nullable=True)
-    
+    role: Mapped[UserRole] = mapped_column(SQLAlchemyEnum(UserRole), nullable=False, default=UserRole.RECRUITER)
