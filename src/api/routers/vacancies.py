@@ -19,7 +19,7 @@ async def vacancy(
 
 @router.post("/{vacancy_id}/questions")
 async def add_question(
-    vacancy_id: str,
+    vacancy_id: int,
     question: schemas.Question,
     current_user: dict = Depends(security.access_token_required)
 ):
@@ -29,7 +29,7 @@ async def add_question(
 
 @router.post('{vacancy_id}/generate-questions')
 async def generate_questions(
-    vacancy_id: str,
+    vacancy_id: int,
     gen_params: schemas.GenerateQuestionsRequest,
     current_user: dict = Depends(security.access_token_required)
 ):
@@ -39,18 +39,18 @@ async def generate_questions(
 
 @router.post("/{vacancy_id}/add-generated-questions")
 async def add_generated_questions(
-    vacancy_id: str,
+    vacancy_id: int,
     add_request: schemas.AddGeneratedQuestionsRequest,
     current_user: dict = Depends(security.access_token_required)
 ):
     service = VacancyService()
-    return await service.add_generated_questions(vacancy_id=vacancy_id, questions=add_request.questions)
+    return await service.generate_questions(vacancy_id=vacancy_id, questions=add_request.questions)
 
 
 @router.delete("/{vacancy_id}/questions/{question_id}")
 async def delete_question(
-    vacancy_id: str,
-    question_id: str,
+    vacancy_id: int,
+    question_id: int,
     current_user: dict = Depends(security.access_token_required)
 ):
     service = VacancyService()
@@ -59,7 +59,7 @@ async def delete_question(
 
 @router.post("/{vacancy_id}/publish")
 async def publish_vacancy(
-    vacancy_id: str,
+    vacancy_id: int,
     current_user: dict = Depends(security.access_token_required)
 ):
     service = VacancyService()
@@ -68,7 +68,7 @@ async def publish_vacancy(
 
 @router.get("/{vacancy_id}")
 async def get_vacancy(
-    vacancy_id: str,
+    vacancy_id: int,
     current_user: dict = Depends(security.access_token_required)
 ):
     service = VacancyService()

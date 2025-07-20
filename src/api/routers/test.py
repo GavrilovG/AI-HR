@@ -21,6 +21,6 @@ async def blabla(id: int):
     return await service.get_by_id(id)
 
 @router.post('/register')
-async def blabla(username: str, password: str):
+async def blabla2(username: str, password: str):
     service = UserService()
     return await service.create_user(username, password)
