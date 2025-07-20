@@ -27,7 +27,7 @@ if config.config_file_name is not None:
 target_metadata = Base.metadata
 config.set_main_option(
     "sqlalchemy.url",
-    "postgresql+asyncpg://postgres:1234@localhost:5432/hr"
+    get_settings(DatabaseSettings).url
 )
 
 # other values from the config, defined by the needs of env.py,

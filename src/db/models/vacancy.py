@@ -6,10 +6,7 @@ from ..base import Base
 from enum import Enum
 from sqlalchemy import Enum as SQLAlchemyEnum
 
-
-class VacancyStatus(str, Enum):
-    DRAFT = "draft"
-    PUBLISHED = "published"
+from ..constants import VacancyStatusEnum
 
 
 class Vacancy(Base):
@@ -24,13 +21,13 @@ class Vacancy(Base):
     questions: Mapped[list[dict]] = mapped_column(JSON, nullable=True)
     
     
-    creator_id: Mapped[int] = mapped_column(
-        BigInteger, foreign_key=True, unique=False
-    )
+    # creator_id: Mapped[int] = mapped_column(
+    #     BigInteger, foreign_key=True, unique=False
+    # )
     
-    status: Mapped[VacancyStatus] = mapped_column(
-        SQLAlchemyEnum(VacancyStatus),
-        default=VacancyStatus.DRAFT,
+    status: Mapped[VacancyStatusEnum] = mapped_column(
+        SQLAlchemyEnum(VacancyStatusEnum),
+        default=VacancyStatusEnum.DRAFT,
         nullable=False,
     )
     

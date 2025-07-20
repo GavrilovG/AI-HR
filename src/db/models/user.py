@@ -2,15 +2,8 @@ from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import BigInteger, VARCHAR
 
 from ..base import Base
-
-from enum import Enum
 from sqlalchemy import Enum as SQLAlchemyEnum
-
-
-class UserRole(str, Enum):
-    RECRUITER = "recruiter"
-    ADMIN = "admin"
-
+from ..constants import UserRoleEnum
 
 class User(Base):
     __tablename__ = "user"
@@ -21,4 +14,4 @@ class User(Base):
 
     email: Mapped[str] = mapped_column(VARCHAR(32), nullable=True)
     password: Mapped[str] = mapped_column(VARCHAR(32), nullable=True)
-    role: Mapped[UserRole] = mapped_column(SQLAlchemyEnum(UserRole), nullable=False, default=UserRole.RECRUITER)
+    role: Mapped[UserRoleEnum] = mapped_column(SQLAlchemyEnum(UserRoleEnum), nullable=False, default=UserRoleEnum.RECRUITER)
