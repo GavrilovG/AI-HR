@@ -3,7 +3,6 @@ from sqlalchemy import BigInteger, VARCHAR
 from sqlalchemy import JSON
 
 from ..base import Base
-from enum import Enum
 from sqlalchemy import Enum as SQLAlchemyEnum
 
 from ..constants import VacancyStatusEnum
@@ -21,9 +20,9 @@ class Vacancy(Base):
     questions: Mapped[list[dict]] = mapped_column(JSON, nullable=True)
     
     
-    # creator_id: Mapped[int] = mapped_column(
-    #     BigInteger, foreign_key=True, unique=False
-    # )
+    creator_id: Mapped[int] = mapped_column(
+        BigInteger, foreign_key=True, unique=False
+    )
     
     status: Mapped[VacancyStatusEnum] = mapped_column(
         SQLAlchemyEnum(VacancyStatusEnum),
@@ -31,4 +30,3 @@ class Vacancy(Base):
         nullable=False,
     )
     
-    temp_questions: Mapped[list[str]] = mapped_column(JSON, nullable=True)

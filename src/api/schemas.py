@@ -1,11 +1,11 @@
 from pydantic import BaseModel
-from typing import Literal, List, Optional
+from typing import Literal, List
 
 class UserLoginSchema(BaseModel):
     username: str
     password: str
 
-    
+
 class VacancyCreate(BaseModel):
     title: str
     tags: str

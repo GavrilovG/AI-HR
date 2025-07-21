@@ -5,7 +5,7 @@ description = "Default template for PDM package"
 authors = [
     {name = "Gr", email = "gavrilov_ga@bk.ru"},
 ]
-dependencies = ["fastapi>=0.116.0", "uvicorn>=0.35.0", "authx>=1.4.3", "api>=0.0.7", "openai>=1.93.2", "jiter>=0.10.0", "pydantic-core>=2.33.2", "aioinject>=1.4.3", "sqlalchemy>=2.0.41", "alembic>=1.16.3", "asyncpg>=0.30.0", "lib>=4.0.0", "mypy>=1.17.0"]
+dependencies = ["fastapi>=0.116.0", "uvicorn>=0.35.0", "authx>=1.4.3", "api>=0.0.7", "openai>=1.93.2", "jiter>=0.10.0", "pydantic-core>=2.33.2", "aioinject>=1.4.3", "sqlalchemy>=2.0.41", "alembic>=1.16.3", "asyncpg>=0.30.0", "lib>=4.0.0", "mypy>=1.17.0", "sqla-filter>=0.4.1"]
 requires-python = ">=3.11"
 readme = "README.md"
 license = {text = "MIT"}
@@ -23,10 +23,6 @@ warn_unused_ignores = true
 disallow_any_generics = true
 check_untyped_defs = true
 no_implicit_reexport = true
-
-[mypy-pyproj.*]
-# use for dependencies that don't have typing stubs
-ignore_missing_imports = True
 
 [tool.pytest.ini_options]
 addopts = [

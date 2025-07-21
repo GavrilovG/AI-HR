@@ -1,16 +1,16 @@
 from fastapi import HTTPException
 from src.db.constants import VacancyStatusEnum
-from ...db.models import User
+from ....db.models import User
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
-from ...db.base import async_session, get_session
-from ...db.models import Vacancy
+from ....db.base import async_session, get_session
+from ....db.models import Vacancy
 from src.ai.ques_gener import generate_questions_ai
 import uuid
 
 
-class VacancyService:
+class VacancyRepository:
     def __init__(
         self,
         session = async_session,
@@ -112,7 +112,7 @@ class VacancyService:
     async def delete_question(
         self,
         vacancy_id: int,
-        question_id: str,
+        question_id: int,
     ):
         async with self._session() as session:
             vacancy = await session.scalar(

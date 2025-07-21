@@ -1,26 +1,21 @@
+from fastapi import APIRouter, Query
 from fastapi import APIRouter
+from ...core.services import UserRepository
+from ...core.modules.user.filters import UserFilterDto
+from ..schemas import UserLoginSchema
 
-from typing import Annotated, Any, Callable
-from aioinject import Inject
-from aioinject.ext.fastapi import inject
-from fastapi import APIRouter, Depends, Request, UploadFile
-
-from ...core.services import UserService
-from sqlalchemy.ext.asyncio import (
-    AsyncSession,
-    AsyncEngine,
-    create_async_engine,
-    async_sessionmaker,
-)
-
-router = APIRouter(prefix='/api/auth')
+router = APIRouter(prefix='/test')
 
 @router.get('/get_user')
-async def blabla(id: int):
-    service = UserService()
-    return await service.get_by_id(id)
+async def blabla(ids: list[int] = Query()):
+    service = UserRepository()
+    return (await service.get_users(
+        UserFilterDto(
+            ids=ids,
+        )
+    ))
 
-@router.post('/register')
-async def blabla2(username: str, password: str):
-    service = UserService()
+@router.post('/create')
+async def blabla2(user: UserLoginSchema):
+    service = UserRepository()
     return await service.create_user(username, password)

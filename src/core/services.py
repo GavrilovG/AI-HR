@@ -1,9 +1,9 @@
 from .modules import (
-    UserService,
-    VacancyService
+    UserRepository,
+    VacancyRepository
 )
 
 __all__ = [
-    "UserService",
-    "VacancyService",
+    "UserRepository",
+    "VacancyRepository",
 ]

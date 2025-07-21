@@ -1,7 +1,7 @@
-from .user import UserService
-from .vacancy import VacancyService
+from .user.repositories import UserRepository
+from .vacancy.repositories import VacancyRepository
 
 __all__ = [
-    "UserService",
-    "VacancyService",
+    "UserRepository",
+    "VacancyRepository",
 ]

@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:dfbcaf4ad036c69d7c78a18a11a09887b6885ce393ccb045a4376c3919f88719"
+content_hash = "sha256:1310dee956f928f8babaae4fdc1cd01dfda6eae06fd7a6aed71933406df7e05d"
 
 [[metadata.targets]]
 requires_python = ">=3.11"
@@ -900,6 +900,20 @@ groups = ["default"]
 files = [
     {file = "sniffio-1.3.1-py3-none-any.whl", hash = "sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2"},
     {file = "sniffio-1.3.1.tar.gz", hash = "sha256:f4324edc670a0f49750a81b895f35c3adb843cca46f0530f79fc1babb23789dc"},
+]
+
+[[package]]
+name = "sqla-filter"
+version = "0.4.1"
+requires_python = ">=3.11"
+summary = "Type safety filtering and ordering for SQLAlchemy"
+groups = ["default"]
+dependencies = [
+    "sqlalchemy>=2.0.27",
+]
+files = [
+    {file = "sqla_filter-0.4.1-py3-none-any.whl", hash = "sha256:bcfe3c61f208d9400c96ffd1af4d423951d844eb8e034ea2fade10a7e5bc63da"},
+    {file = "sqla_filter-0.4.1.tar.gz", hash = "sha256:90a4933d07472440ad03cb615c309341e7c319aa467207529b9f86b2ab538ec6"},
 ]
 
 [[package]]
