@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, status, Request, Response
-from ...ai.ques_gener import generate_questions_ai
-from ...core.services import VacancyRepository
+from src.ai.ques_gener import generate_questions_ai
+from src.core.services import VacancyRepository
 from src.api import schemas
 # from src.api.routers.login import auth
 

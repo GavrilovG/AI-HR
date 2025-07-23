@@ -1,5 +1,5 @@
 
-from ....db.models import User
+from src.db.models import User
 from .dto import UserDto
 
 def mapper(user: User | None) -> UserDto | None:

@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from ....db.constants import UserRoleEnum
+from src.db.constants import UserRoleEnum
 from datetime import datetime
 
 @dataclass

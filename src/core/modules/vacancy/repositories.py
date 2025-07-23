@@ -1,15 +1,12 @@
 
 from sqlalchemy import select
-from ....db.base import async_session
-from ....db.models import Vacancy
-
-
-
+from src.db.base import async_session
+from src.db.models import Vacancy
 
 from collections.abc import Sequence
-from ....db.models import Vacancy
+from src.db.models import Vacancy
 from sqlalchemy import Select, select
-from ....db.base import async_session
+from src.db.base import async_session
 
 from .filters import VacancyFilterDto
 from .dto import VacancyDto

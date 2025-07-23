@@ -1,12 +1,9 @@
 from fastapi import APIRouter
-from fastapi import APIRouter, Depends, HTTPException, Response, Request, Form, status
-from authx import AuthX, AuthXConfig
-from pydantic import BaseModel
+from fastapi import APIRouter, Depends, HTTPException, Response, Request, Form
 
 from src.api.routers.auth import get_hash
 from src.core.modules.user.queries import CreateUserCommand, GetUserQuery
 
-from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
 templates = Jinja2Templates(directory="src/api/templates") 

@@ -1,13 +1,12 @@
 from fastapi import Depends, HTTPException, Request, status
-from fastapi.responses import RedirectResponse
 from passlib.context import CryptContext
 
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
-from ...core.services import UserRepository
-from ...core.modules.user.dto import UserDto
-from ...core.modules.user.filters import UserFilterDto
-from ...settings import AuthSettings, get_settings
+from src.core.services import UserRepository
+from src.core.modules.user.dto import UserDto
+from src.core.modules.user.filters import UserFilterDto
+from src.settings import AuthSettings, get_settings
 from src.core.modules.user.queries import GetUserQuery
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

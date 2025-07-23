@@ -9,8 +9,7 @@ router = APIRouter()
 
 router.include_router(vacancies_router)
 router.include_router(login_router)
-
-router.include_router(test_router)
 router.include_router(registration_router)
 
 
+router.include_router(test_router)

@@ -4,8 +4,8 @@ from typing import Annotated
 from sqla_filter import UNSET, BaseFilter, FilterField, Unset
 from sqlalchemy.sql.operators import eq, in_op
 
-from ....db.constants import UserRoleEnum
-from ....db.models import User
+from src.db.constants import UserRoleEnum
+from src.db.models import User
 
 
 class UserFilterDto(BaseFilter):

@@ -1,15 +1,14 @@
 
 from collections.abc import Sequence
-from ....db.models import User
+from src.db.models import User
 from sqlalchemy import Select, select
-from ....db.base import async_session
+from src.db.base import async_session
 from .mapper import mapper
 
-from ....db.models import User
-from ....db.constants import UserRoleEnum
+from src.db.models import User
 
 from .filters import UserFilterDto
-from .dto import UserDto, CreateUserDto
+from .dto import CreateUserDto
 
 
 class UserRepository:

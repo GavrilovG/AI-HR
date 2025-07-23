@@ -1,11 +1,9 @@
 from collections.abc import Sequence
 from typing import Annotated
-
 from sqla_filter import UNSET, BaseFilter, FilterField, Unset
 from sqlalchemy.sql.operators import eq, in_op
-
-from ....db.constants import VacancyStatusEnum
-from ....db.models import Vacancy
+from src.db.constants import VacancyStatusEnum
+from src.db.models import Vacancy
 
 
 class VacancyFilterDto(BaseFilter):
@@ -25,4 +23,3 @@ class VacancyFilterDto(BaseFilter):
         Sequence[VacancyStatusEnum] | Unset,
         FilterField(Vacancy.status, operator=in_op),
     ] = UNSET
-    

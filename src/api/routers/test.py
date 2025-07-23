@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query
 
 from fastapi.templating import Jinja2Templates
-from ...core.modules.user.queries import GetUsersQuery
+from src.core.modules.user.queries import GetUsersQuery
 
 
 router = APIRouter(prefix='/test')

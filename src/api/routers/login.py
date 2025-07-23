@@ -1,13 +1,9 @@
 from fastapi import APIRouter
-from fastapi import APIRouter, Depends, HTTPException, Response, Request, Form, status
-from authx import AuthX, AuthXConfig, RequestToken
-from pydantic import BaseModel
+from fastapi import APIRouter, Depends, Response, Request, Form
 
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
-from ...core.services import UserRepository
-from ...core.modules.user.dto import UserDto
-from ...core.modules.user.filters import UserFilterDto
+from src.core.modules.user.dto import UserDto
 from .auth import authenticate_user, create_access_token, get_current_user
 
 
