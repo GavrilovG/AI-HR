@@ -7,7 +7,6 @@ TSettings = TypeVar("TSettings", bound=BaseSettings)
 
 
 def get_settings(settings):
-    print(settings())
     return settings()
 
 
@@ -26,3 +25,10 @@ class DatabaseSettings(BaseSettings):
     @property
     def url(self) -> str:
         return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
+    
+
+class AuthSettings(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix="auth_")
+
+    secret_key: str
+    algorithm: str

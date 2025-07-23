@@ -1,27 +1,13 @@
 from fastapi import APIRouter, Query
-from fastapi import APIRouter
-from ...core.services import UserRepository, VacancyRepository
-from ...core.modules.user.filters import UserFilterDto
-from ...core.modules.vacancy.filters import VacancyFilterDto
-from ...db.constants import VacancyStatusEnum
-from ..schemas import UserLoginSchema
+
+from fastapi.templating import Jinja2Templates
+from ...core.modules.user.queries import GetUsersQuery
+
 
 router = APIRouter(prefix='/test')
+templates = Jinja2Templates(directory="src/api/templates") 
 
 @router.get('/get_user')
-async def blabla(ids: list[int] = Query()):
-    service = UserRepository()
-    return (await service.get_user(
-        UserFilterDto(
-            ids=ids,
-        )
-    ))
-
-@router.get('/get_vacancy')
-async def blabla2(status: list[VacancyStatusEnum] = Query()):
-    service = VacancyRepository()
-    return (await service.get_vacancies(
-        VacancyFilterDto(
-            status=status
-        )
-    ))
+async def blabla():
+    user = await GetUsersQuery(role='admin')
+    return user

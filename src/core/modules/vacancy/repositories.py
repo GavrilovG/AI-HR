@@ -1,10 +1,7 @@
-from fastapi import HTTPException
-from src.db.constants import VacancyStatusEnum
+
 from sqlalchemy import select
 from ....db.base import async_session
 from ....db.models import Vacancy
-from src.ai.ques_gener import generate_questions_ai
-import uuid
 
 
 

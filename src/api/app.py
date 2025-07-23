@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from .routers import router
 
 def create_app(scope=None):
@@ -6,9 +6,6 @@ def create_app(scope=None):
 
 
     app.include_router(router)
-    @app.get("/")
-    async def root():
-        return {"message": "OK"}
     
     return app
     

@@ -21,4 +21,4 @@ class UserFilterDto(BaseFilter):
         UserRoleEnum | Unset,
         FilterField(User.role, operator=eq),
     ] = UNSET
-    
+
