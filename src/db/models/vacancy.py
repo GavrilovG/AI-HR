@@ -10,6 +10,7 @@ from ..constants import VacancyStatusEnum
 from sqlalchemy import ForeignKeyConstraint
 from ..models import User
 
+
 class Vacancy(Base):
     __tablename__ = "vacancy"
     __table_args__ = (
