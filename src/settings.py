@@ -32,3 +32,10 @@ class AuthSettings(BaseSettings):
 
     secret_key: str
     algorithm: str
+
+
+class OpenAISettings(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix="openai_")
+    
+    api_key: str
+    
