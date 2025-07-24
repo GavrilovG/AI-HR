@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import BigInteger
+from sqlalchemy import BigInteger, ForeignKey
 
 from ..base import Base
 from sqlalchemy import ForeignKeyConstraint
@@ -19,6 +19,6 @@ class Question(Base):
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, unique=True)
     text: Mapped[str]
     order: Mapped[int]
-    vacancy_id: Mapped[int] = mapped_column(BigInteger, foreign_key=True, unique=False)
+    vacancy_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("vacancy.id"), unique=False)
 
     vacancy: Mapped[Vacancy] = relationship()

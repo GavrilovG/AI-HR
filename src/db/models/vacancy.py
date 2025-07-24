@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import BigInteger, VARCHAR, DateTime
+from sqlalchemy import BigInteger, VARCHAR, DateTime, ForeignKey
 from datetime import datetime
 
 from ..base import Base
@@ -25,7 +25,7 @@ class Vacancy(Base):
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, unique=True)
     title: Mapped[str]
     tags: Mapped[str]
-    creator_id: Mapped[int] = mapped_column(BigInteger, foreign_key=True, unique=False)
+    creator_id: Mapped[int] = mapped_column(BigInteger, ForeignKey("user.id"), unique=False)
     status: Mapped[VacancyStatusEnum] = mapped_column(SQLAlchemyEnum(VacancyStatusEnum), default=VacancyStatusEnum.DRAFT, nullable=False,)
     created_at: Mapped[datetime] = mapped_column(DateTime)
     
