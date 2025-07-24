@@ -1,15 +1,14 @@
 
-from sqlalchemy import select
-from src.db.base import async_session
-from src.db.models import Vacancy
-
 from collections.abc import Sequence
 from src.db.models import Vacancy
 from sqlalchemy import Select, select
 from src.db.base import async_session
+from .mapper import mapper
+
+from src.db.models import Vacancy
 
 from .filters import VacancyFilterDto
-from .dto import VacancyDto
+from .dto import CreateVacancyDto
 
 
 class VacancyRepository:
@@ -22,31 +21,18 @@ class VacancyRepository:
     async def get_vacancy(
         self,
         filter: VacancyFilterDto | None = None
-    ) -> VacancyDto | None:
+    ) -> Vacancy | None:
         async with self._session() as session:
             vacancy = await session.scalar(self._get_vacancy_stmt(filter))
-            return VacancyDto(
-                        id=vacancy.id,
-                        title=vacancy.title,
-                        tags=vacancy.tags,
-                        creator_id=vacancy.creator_id,
-                        status=vacancy.status
-                    )
+            return vacancy
     
-    async def get_vacancies(
+    async def get_vacancys(
         self,
         filter: VacancyFilterDto | None = None
-    ) -> Sequence[VacancyDto]:
+    ) -> Sequence[Vacancy]:
         async with self._session() as session:
-            vacancies = await session.scalars(self._get_vacancy_stmt(filter))
-            vacancies = [VacancyDto(
-                            id=vacancy.id,
-                            title=vacancy.title,
-                            tags=vacancy.tags,
-                            creator_id=vacancy.creator_id,
-                            status=vacancy.status
-                        ) for vacancy in vacancies]
-            return vacancies
+            vacancys = await session.scalars(self._get_vacancy_stmt(filter))
+            return vacancys
         
     def _get_vacancy_stmt(
         self,
@@ -56,3 +42,19 @@ class VacancyRepository:
         if filter is not None:
             stmt = filter.apply(stmt)
         return stmt
+    
+    async def create_vacancy(
+        self,
+        vacancy: CreateVacancyDto,
+    ) -> Vacancy:
+        async with self._session() as session:
+            vacancy = Vacancy(
+                title=vacancy.title,
+                tags=vacancy.tags,
+                creator_id=vacancy.creator_id,
+                status=vacancy.status
+            )
+            session.add(vacancy)
+            await session.commit()
+            await session.refresh(vacancy)
+            return vacancy

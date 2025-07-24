@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, Response, Request, Form
 
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from src.core.modules.user.dto import UserDto
+from src.core.modules import UserDto
 from .auth import authenticate_user, create_access_token, get_current_user
 
 

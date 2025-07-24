@@ -3,11 +3,10 @@ from passlib.context import CryptContext
 
 from jose import JWTError, jwt
 from datetime import datetime, timedelta, timezone
-from src.core.services import UserRepository
-from src.core.modules.user.dto import UserDto
-from src.core.modules.user.filters import UserFilterDto
+from src.core.modules import UserDto
+from src.core.modules import UserFilterDto
 from src.settings import AuthSettings, get_settings
-from src.core.modules.user.queries import GetUserQuery
+from src.core.modules import GetUserQuery
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -24,7 +23,7 @@ def get_hash(password: str) -> str:
     return pwd_context.hash(password)
 
 async def authenticate_user(email: str, password: str):
-    user = await UserRepository().get_user(UserFilterDto(email=email))
+    user = await GetUserQuery(email=email)
     if user is None or not pwd_context.verify(password, user.password):
         return None
     return user

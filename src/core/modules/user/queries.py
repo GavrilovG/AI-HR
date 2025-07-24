@@ -1,12 +1,13 @@
 from collections.abc import Sequence
 from src.core.modules.user.dto import UserDto, CreateUserDto
 from src.core.modules.user.filters import UserFilterDto
-from src.core.services import UserRepository
+from .repositories import UserRepository
 from src.db.constants import UserRoleEnum
 from .mapper import mapper
 from src.db.base import async_session
 
 
+Repo = UserRepository()
 
 async def GetUserQuery(
     id: int | None = None,
@@ -17,7 +18,7 @@ async def GetUserQuery(
         filter.ids = [id]
     if email is not None:
         filter.email = email
-    return mapper(await UserRepository().get_user(filter))
+    return mapper(await Repo.get_user(filter))
 
 
 async def GetUsersQuery(
@@ -29,7 +30,7 @@ async def GetUsersQuery(
         filter.ids = ids
     if role is not None:
         filter.role = role.lower()
-    return [mapper(user) for user in await UserRepository().get_users(filter)]
+    return [mapper(user) for user in await Repo.get_users(filter)]
 
 
 async def CreateUserCommand(
@@ -46,7 +47,7 @@ async def CreateUserCommand(
             job_title=job_title,
             password=password,
         )
-    return mapper(await UserRepository().create_user(user))
+    return mapper(await Repo.create_user(user))
 
 async def UpdateUserCommand(
     email: str,
@@ -54,7 +55,7 @@ async def UpdateUserCommand(
     company_name: str,
     job_title: str,
 ) -> UserDto:
-    user = await UserRepository().get_user(UserFilterDto(email=email))
+    user = await Repo.get_user(UserFilterDto(email=email))
     user.full_name = full_name
     user.company_name = company_name
     user.job_title = job_title

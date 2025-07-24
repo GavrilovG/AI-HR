@@ -21,10 +21,3 @@ class CreateUserDto:
     password: str
     company_name: str
     job_title: str
-    
-@dataclass
-class UpdateUserDto:
-    email: str
-    full_name: str
-    company_name: str
-    job_title: str

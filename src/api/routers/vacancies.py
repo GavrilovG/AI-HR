@@ -1,75 +1,40 @@
-from fastapi import APIRouter, Depends, status, Request, Response
+from fastapi import APIRouter, Depends, Form, HTTPException, status, Request, Response
+from fastapi.responses import RedirectResponse
+from fastapi.templating import Jinja2Templates
 from src.ai.ques_gener import generate_questions_ai
-from src.core.services import VacancyRepository
-from src.api import schemas
-# from src.api.routers.login import auth
+from .auth import get_current_user
+from src.core.modules import UserDto, GetVacancyQuery, GetUserQuery, UpdateVacancyCommand
 
-router = APIRouter(prefix='/api/vacancies')
+router = APIRouter(prefix='')
+templates = Jinja2Templates(directory="src/api/templates") 
 
-
-
-@router.post('')
-async def vacancy(
-    vacancy_data: schemas.VacancyCreate,
-    # current_user: dict = Depends(auth.access_token_required)
-):
-    service = VacancyRepository()
-    return await service.create_vacancy(title=vacancy_data.title, tags=vacancy_data.tags)
-
-
-@router.post("/{vacancy_id}/questions")
-async def add_question(
-    vacancy_id: int,
-    question: schemas.Question,
-    # current_user: dict = Depends(auth.access_token_required)
-):
-    service = VacancyRepository()
-    return await service.add_questions(vacancy_id=vacancy_id, questions=[question.question])
-
-
-@router.post('{vacancy_id}/generate-questions')
-async def generate_questions(
-    vacancy_id: int,
-    gen_params: schemas.GenerateQuestionsRequest,
-    # current_user: dict = Depends(auth.access_token_required)
-):
-    service = VacancyRepository()
-    return await service.generate_questions(vacancy_id=vacancy_id)
-
-
-@router.post("/{vacancy_id}/add-generated-questions")
-async def add_generated_questions(
-    vacancy_id: int,
-    add_request: schemas.AddGeneratedQuestionsRequest,
-    # current_user: dict = Depends(auth.access_token_required)
-):
-    service = VacancyRepository()
-    return await service.generate_questions(vacancy_id=vacancy_id, questions=add_request.questions)
-
-
-@router.delete("/{vacancy_id}/questions/{question_id}")
-async def delete_question(
-    vacancy_id: int,
-    question_id: int,
-    # current_user: dict = Depends(auth.access_token_required)
-):
-    service = VacancyRepository()
-    return await service.delete_question(vacancy_id=vacancy_id, question_id=question_id)
-
-
-@router.post("/{vacancy_id}/publish")
-async def publish_vacancy(
-    vacancy_id: int,
-    # current_user: dict = Depends(auth.access_token_required)
-):
-    service = VacancyRepository()
-    return await service.publish_vacancy(vacancy_id=vacancy_id)
-
-
-@router.get("/{vacancy_id}")
+@router.get("/vacancy/{id}")
 async def get_vacancy(
-    vacancy_id: int,
-    # current_user: dict = Depends(auth.access_token_required)
+    request: Request,
+    id: int,
+    user: UserDto | None = Depends(get_current_user),
 ):
-    service = VacancyRepository()
-    return service.get_vacancy(vacancy_id=vacancy_id)
+    vacancy = await GetVacancyQuery(id=id)
+    creator = await GetUserQuery(id=vacancy.creator_id)
+    print(vacancy, creator)
+    if vacancy is None:
+        return HTTPException(status_code=404)
+    if vacancy.creator_id != user.id and user.role != "ADMIN":
+        return HTTPException(status_code=403)
+    return templates.TemplateResponse("vacancy.html", {"request": request, "vacancy": vacancy, "creator": creator})
+
+@router.post("/vacancy/{id}/update")
+async def get_vacancy(
+    request: Request,
+    id: int,
+    user: UserDto | None = Depends(get_current_user),
+    title: str = Form(...),
+    tags: str = Form(...),
+    status: str = Form(...)
+):
+    vacancy = await GetVacancyQuery(id=id)
+    if vacancy.creator_id != user.id and user.role != "ADMIN":
+        return RedirectResponse(url='/profile', status_code=303)
+    vacancy = await UpdateVacancyCommand(id=id, title=title, tags=tags, status=status)
+    return RedirectResponse(url=f"/vacancy/{id}", status_code=303)
+    

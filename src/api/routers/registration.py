@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, Response, Request, Form
 from fastapi.responses import RedirectResponse
 
 from src.api.routers.auth import get_hash
-from src.core.modules.user.queries import CreateUserCommand, GetUserQuery
+from src.core.modules import CreateUserCommand, GetUserQuery
 
 from fastapi.templating import Jinja2Templates
 
