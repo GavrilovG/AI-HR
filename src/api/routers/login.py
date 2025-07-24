@@ -17,12 +17,14 @@ async def login(request: Request):
 
 @router.post("/login")
 async def login(
+    request: Request,
+    response: Response,
     email: str = Form(...),
     password: str = Form(...)
 ):
     check = await authenticate_user(email=email, password=password)
     if check is None:
-        return RedirectResponse(url='/login', status_code=303)
+        return templates.TemplateResponse("exception.html", {"request": request, "text": "Неверная почта или пароль"})
     access_token = create_access_token({"sub": str(check.id)})
     response = RedirectResponse(url='/profile', status_code=303)
     response.set_cookie(key="users_access_token", value=access_token, httponly=True)
