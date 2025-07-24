@@ -32,21 +32,21 @@ async def authenticate_user(email: str, password: str):
 def get_token(request: Request):
     token = request.cookies.get('users_access_token')
     if not token:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Войдите еще раз')
+        return None
     return token
 
-async def get_current_user(token: str = Depends(get_token)) -> UserDto:
+async def get_current_user(token: str | None = Depends(get_token)) -> UserDto | None:
     try:
         payload = jwt.decode(token, get_settings(AuthSettings).secret_key, algorithms=[get_settings(AuthSettings).algorithm])
-    except JWTError:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Войдите еще раз')
+    except:
+        return None
 
     expire = payload.get('exp')
     expire_time = datetime.fromtimestamp(int(expire), tz=timezone.utc)
     if (not expire) or (expire_time < datetime.now(timezone.utc)):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Войдите еще раз')
+        return None
     user_id = payload.get('sub')
     if not user_id:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Войдите еще раз')
+        return None
     user = await GetUserQuery(id=int(user_id))
     return user

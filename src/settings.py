@@ -30,8 +30,8 @@ class DatabaseSettings(BaseSettings):
 class AuthSettings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="auth_")
 
-    secret_key: str
-    algorithm: str
+    secret_key: str = "gV64m9aIzFG4qpgVphvQbPQrtAO0nM-7YwwOvu0XPt5KJOjAy4AfgLkqJXYEt"
+    algorithm: str = "HS256"
 
 
 class OpenAISettings(BaseSettings):

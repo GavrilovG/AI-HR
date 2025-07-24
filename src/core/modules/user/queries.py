@@ -4,6 +4,8 @@ from src.core.modules.user.filters import UserFilterDto
 from src.core.services import UserRepository
 from src.db.constants import UserRoleEnum
 from .mapper import mapper
+from src.db.base import async_session
+
 
 
 async def GetUserQuery(
@@ -45,3 +47,19 @@ async def CreateUserCommand(
             password=password,
         )
     return mapper(await UserRepository().create_user(user))
+
+async def UpdateUserCommand(
+    email: str,
+    full_name: str,
+    company_name: str,
+    job_title: str,
+) -> UserDto:
+    user = await UserRepository().get_user(UserFilterDto(email=email))
+    user.full_name = full_name
+    user.company_name = company_name
+    user.job_title = job_title
+    async with async_session() as session:
+        session.add(user)
+        await session.commit()
+        await session.refresh(user)
+    return mapper(user)

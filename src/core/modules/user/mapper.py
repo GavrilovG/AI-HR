@@ -12,6 +12,6 @@ def mapper(user: User | None) -> UserDto | None:
         password=user.password,
         company_name=user.company_name,
         job_title=user.job_title,
-        role=user.role,
+        role=user.role.name,
         created_at=user.created_at
     )

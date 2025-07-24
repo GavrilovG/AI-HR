@@ -9,5 +9,4 @@ templates = Jinja2Templates(directory="src/api/templates")
 
 @router.get('/get_user')
 async def blabla():
-    user = await GetUsersQuery(role='admin')
-    return user
+    pass

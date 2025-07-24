@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from fastapi import APIRouter, Depends, HTTPException, Response, Request, Form
+from fastapi.responses import RedirectResponse
 
 from src.api.routers.auth import get_hash
 from src.core.modules.user.queries import CreateUserCommand, GetUserQuery
@@ -26,7 +27,7 @@ async def register(
     ):
     user = await GetUserQuery(email=email)
     if user is not None:
-        return templates.TemplateResponse("exception.html", {"text": "Email уже зарегистрирован"})
+        return RedirectResponse(url='/login', status=303)
     
     user = await CreateUserCommand(
         email=email,
@@ -35,4 +36,4 @@ async def register(
         job_title=job_title,
         password=get_hash(password),
     )
-    return {f"создан юзер с параметрами: {str(user)}"}
+    return RedirectResponse(url='/login', status_code=303)

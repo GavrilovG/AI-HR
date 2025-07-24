@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Request
+from fastapi.responses import RedirectResponse
 from .routers import router
 
 def create_app(scope=None):
@@ -6,6 +7,6 @@ def create_app(scope=None):
 
 
     app.include_router(router)
-    
+
     return app
     

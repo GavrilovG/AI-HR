@@ -11,7 +11,7 @@ class UserDto:
     password: str
     company_name: str
     job_title: str
-    role: UserRoleEnum
+    role: str
     created_at: datetime
 
 @dataclass
@@ -19,5 +19,12 @@ class CreateUserDto:
     full_name: str
     email: str
     password: str
+    company_name: str
+    job_title: str
+    
+@dataclass
+class UpdateUserDto:
+    email: str
+    full_name: str
     company_name: str
     job_title: str

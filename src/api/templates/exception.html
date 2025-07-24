@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Упс..</title>
-    <style>
-        body { font-family: Arial; }
-    </style>
+    <title>Ошибка {{ status_code }}</title>
 </head>
 <body>
-    <h1>Ошибка!</h1>
-    <p>{{ text }}</p>
+    <h1>Ошибка {{ status_code }}: {{ error_name }}</h1>
+    <p>{{ error_detail }}</p>
+    <a href="/login">Войти еще раз</a>
 </body>
 </html>

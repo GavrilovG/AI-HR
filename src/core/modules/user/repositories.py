@@ -8,7 +8,7 @@ from .mapper import mapper
 from src.db.models import User
 
 from .filters import UserFilterDto
-from .dto import CreateUserDto
+from .dto import CreateUserDto, UpdateUserDto
 
 
 class UserRepository:
